@@ -20,12 +20,33 @@ public class Main {
             System.out.println("Please enter your password: ");
             password = sc.nextLine();
         }
+
+        /*Tests*/
         try {
-            investor.buyAsset(stockMarket.getMarketStocks().get(0), 10, stockMarket, connection);
+            investor.buyAsset(stockMarket.getMarketStocks().get(1), 10, stockMarket, connection);
+            investor.buyAsset(stockMarket.getMarketStocks().get(2), 10, stockMarket, connection);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            e.printStackTrace(System.err);
+        }
+        for (Stock stock : investor.getPersonalPortfolio().getHeldAssets()) {
+            System.out.println(stock.getCodeName());
         }
         System.out.println(investor.getPersonalPortfolio().getValue());
         System.out.println(investor.getBalance());
+        System.out.println();
+
+        try {
+            investor.sellAsset(stockMarket.getMarketStocks().get(2), 10, stockMarket, connection);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace(System.err);
+        }
+        for (Stock stock : investor.getPersonalPortfolio().getHeldAssets()) {
+            System.out.println(stock.getCodeName());
+        }
+        System.out.println(investor.getPersonalPortfolio().getValue());
+        System.out.println(investor.getBalance());
+
     }
 }

@@ -18,6 +18,9 @@ public class Portfolio {
         heldAssets = new LinkedList();
     }
 
+    public LinkedList<Stock> getHeldAssets() {
+        return heldAssets;
+    }
     public double getValue() {
         return value;
     }
@@ -45,8 +48,17 @@ public class Portfolio {
         if (index == -1) {
             throw new Exception("No such asset in your portfolio !");
         }
-        Stock stockHeld = heldAssets.get(index);
-        stockHeld.setQuantityHeld(asset.getQuantityHeld() - quantity);
+        double quant = asset.getQuantityHeld() - quantity;
+        if (quant < 0) {
+            throw new Exception("Quantity you want to sell exceeds stock limit !");
+        }
+        if (quant == 0) {
+            heldAssets.remove(asset);
+        }
+        else {
+            Stock stockHeld = heldAssets.get(index);
+            stockHeld.setQuantityHeld(asset.getQuantityHeld() - quantity);
+        }
     }
 
 }

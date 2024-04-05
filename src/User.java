@@ -13,7 +13,7 @@ import java.sql.*;
 public class User {
     private String userName;
     private String password;
-    private double balance = 10000;
+    private double balance = 100000;
     private Portfolio personalPortfolio = new Portfolio();
     /*Favourites*/
 

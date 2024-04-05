@@ -8,6 +8,15 @@
 
 public class StockHolding {
     private Stock stock;
-    private int quantity;
-    private double price;
+    private int quantityHeld;
+    private double buyPrice;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Stock) {
+            Stock stock = (Stock) obj;
+            return this.stock.equals(stock);
+        }
+        return false;
+    }
 }

@@ -20,5 +20,12 @@ public class Main {
             System.out.println("Please enter your password: ");
             password = sc.nextLine();
         }
+        try {
+            investor.buyAsset(stockMarket.getMarketStocks().get(0), 10, stockMarket, connection);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println(investor.getPersonalPortfolio().getValue());
+        System.out.println(investor.getBalance());
     }
 }

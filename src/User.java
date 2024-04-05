@@ -26,6 +26,10 @@ public class User {
         this.balance = balance;
     }
 
+    public void updateBalance(double cash) {
+        this.balance += cash;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -84,4 +88,22 @@ public class User {
         }
         return false;
     }
+
+    public void buyAsset(Stock stock, double quantity, Market market, Connection con)  throws Exception{
+        if (balance < quantity * stock.getCurrPrice()) {
+            throw new Exception("Insufficient funds to buy this quantity of this stock !");
+        }
+        personalPortfolio.buyAsset(stock, quantity);
+        personalPortfolio.updateValue(quantity*stock.getCurrPrice());
+        updateBalance(-quantity*stock.getCurrPrice());
+        market.updateStock(stock, -quantity, con);
+    }
+
+    public void sellAsset(Stock stock, double quantity, Market market, Connection con) throws Exception{
+        personalPortfolio.sellAsset(stock, quantity);
+        personalPortfolio.updateValue(-quantity*stock.getCurrPrice());
+        updateBalance(quantity*stock.getCurrPrice());
+        market.updateStock(stock, quantity, con);
+    }
+
 }

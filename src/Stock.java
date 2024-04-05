@@ -11,6 +11,9 @@ public class Stock {
     private final String codeName; /*Entreprise*/
     private double currPrice;
     private double quantity;
+    private double quantityHeld = 0;
+    private double buyPrice = currPrice;
+
 
     public Stock(String codeName, double currPrice, double quantity) {
         this.codeName = codeName;
@@ -26,7 +29,31 @@ public class Stock {
         return quantity;
     }
 
+    public double getQuantityHeld() {
+        return quantityHeld;
+    }
+
     public double getCurrPrice() {
         return currPrice;
+    }
+
+    public void setBuyPrice(double buyPrice) {
+        this.buyPrice = buyPrice;
+    }
+
+    public void setQuantityHeld(double quantityHeld) {
+        this.quantityHeld = quantityHeld;
+    }
+    public void updateQuantity(double newQuantity) {
+        quantity += newQuantity;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Stock) {
+            Stock stock = (Stock) obj;
+            return this.codeName.equals(stock.codeName);
+        }
+        return false;
     }
 }

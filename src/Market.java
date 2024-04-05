@@ -37,13 +37,23 @@ public class Market {
         return marketStocks;
     }
 
-    public void addStock(Stock stock, Connection con){
-        marketStocks.add(stock);
+    public void updateStock(Stock stock, double quantity, Connection con){
+        /*We suppose here that the stock exists in the market*/
+        /*quantity can be positive or negative double*/
         try {
-            PreparedStatement pstmt = con.prepareStatement("INSERT INTO Stocks VALUES (?, ?, ?)");
-            pstmt.setString(1, stock.getCodeName());
-            pstmt.setDouble(2, stock.getCurrPrice());
-            pstmt.setDouble(3, stock.getQuantity() * stock.getCurrPrice());
+            /*We update it in the linkedList*/
+            for (Stock s : marketStocks) {
+                if (s.equals(stock)) {
+                    s.updateQuantity(quantity);
+                }
+            }
+            /*Now we update it in the database*/
+            Statement stmt = con.createStatement();
+            ResultSet rSet = stmt.executeQuery("SELECT Price, CapMarket FROM Stocks WHERE CompanyName=" + "'" + stock.getCodeName() + "'");
+            rSet.next();
+            double prix = rSet.getDouble("Price");
+            double quantStock = rSet.getDouble("CapMarket") / prix;
+            PreparedStatement pstmt = con.prepareStatement("UPDATE Stocks SET CapMarket=" + (quantStock+quantity)*prix + " WHERE CompanyName=" + "'" + stock.getCodeName() + "'");
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {

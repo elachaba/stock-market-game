@@ -12,7 +12,21 @@ public class Stock {
     private double currPrice;
     private double quantity;
 
+    public Stock(String codeName, double currPrice, double quantity) {
+        this.codeName = codeName;
+        this.currPrice = currPrice;
+        this.quantity = quantity;
+    }
 
+    public String getCodeName() {
+        return codeName;
+    }
 
+    public double getQuantity() {
+        return quantity;
+    }
 
+    public double getCurrPrice() {
+        return currPrice;
+    }
 }

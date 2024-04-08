@@ -13,7 +13,7 @@ import java.util.Random;
 public class BrownianSimulator {
     
 
-    private static final double[] initialStockPrices = init(); // Initial Stock Prices on April 5th
+    private static final double[] initialStockPrices = init(); // Initial Stock Prices
 
     public static double[][] simulation(int nbTimes, int nbStocks){
 
@@ -45,15 +45,19 @@ public class BrownianSimulator {
     }
 
     private static double[] init(){
-
-        double[] initPrices = new double[5];
-        initPrices[0] = 169.58; // Apple Stock
-        initPrices[1] = 153.94; // Google Stock
-        initPrices[2] = 527.34; // Meta Stock
-        initPrices[3] = 797.56; // BlackRock Stock
-        initPrices[4] = 197.45; // JPMorgan & Chase Stock
+        double[] initPrices = new double[10];
+        initPrices[0] = 169.58;   // Apple Stock
+        initPrices[1] = 153.94;   // Google Stock
+        initPrices[2] = 527.34;   // Meta Stock
+        initPrices[3] = 797.56;   // BlackRock Stock
+        initPrices[4] = 197.45;   // JPMorgan & Chase Stock
+        initPrices[5] = 312.73;   // Amazon Stock
+        initPrices[6] = 97.85;    // Microsoft Stock
+        initPrices[7] = 2845.58;  // Tesla Stock
+        initPrices[8] = 175.22;   // Walmart Stock
+        initPrices[9] = 155.68;   // Coca-Cola Stock
         return initPrices;
-
     }
 
-    }
+
+}

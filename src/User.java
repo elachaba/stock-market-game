@@ -68,7 +68,7 @@ public class User {
         }
     }
 
-    public boolean createAccount(String userN, String pwd, Connection con) {
+    public static boolean createAccount(String userN, String pwd, Connection con) {
         try {
             Statement stmt = con.createStatement();
             ResultSet rset = stmt.executeQuery("SELECT * FROM Users WHERE UserName=" + "'" + userN + "'");

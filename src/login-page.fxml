@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginScene">
+   <left>
+      <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #070E23;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="148.0" fitWidth="272.0" layoutX="43.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@trading.jpg" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="69.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trade" textAlignment="CENTER">
+               <font>
+                  <Font name="LatinModernMath-Regular" size="23.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="86.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trade">
+               <font>
+                  <Font name="DejaVu Serif Bold" size="31.0" />
+               </font>
+            </Text>
+            <Text fill="#dda601" layoutX="112.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Masters" wrappingWidth="148.140625">
+               <font>
+                  <Font name="DejaVu Serif Bold" size="31.0" />
+               </font>
+            </Text>
+            <Text fill="#eeea09" layoutX="136.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Smarter, Faster" wrappingWidth="165.203125">
+               <font>
+                  <Font name="LatinModernMath-Regular" size="23.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="500.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="userTextField" layoutX="105.0" layoutY="224.0" promptText="User Name" style="-fx-background-color: transparent; -fx-border-color: #1D284D; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField fx:id="pwdTextField" layoutX="105.0" layoutY="283.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #1D284D; -fx-border-width: 0px 0px 2px 0px;" />
+            <FontAwesomeIcon fill="#1d284d" glyphName="USER" layoutX="76.0" layoutY="244.0" selectionFill="#1d284d" selectionStart="1" size="20" />
+            <FontAwesomeIcon fill="#1d284d" glyphName="KEY" layoutX="74.0" layoutY="303.0" selectionStart="1" size="20" />
+            <Button fx:id="registerButton" alignment="CENTER" layoutX="133.0" layoutY="389.0" mnemonicParsing="false" onAction="#registerAction" prefHeight="37.0" prefWidth="85.0" style="-fx-background-color: #1D284D;" text="Register" textAlignment="CENTER" textFill="WHITE" />
+            <FontAwesomeIcon fill="#1d284d" glyphName="USERS" layoutX="157.0" layoutY="112.0" size="35" />
+            <Text fill="#1d284d" layoutX="31.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To keep connected with us please create an account " textAlignment="CENTER" wrappingWidth="289.7294921875">
+               <font>
+                  <Font name="Lato Bold" size="15.0" />
+               </font>
+            </Text>
+            <Text fx:id="errorText" fill="#e80404" layoutX="12.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="326.7294921875">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Text>
+            <Button fx:id="exitButton" layoutX="321.0" layoutY="2.0" mnemonicParsing="false" onAction="#exit" style="-fx-background-color: transparent;">
+               <graphic>
+                  <FontAwesomeIcon glyphName="CLOSE" size="16" />
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

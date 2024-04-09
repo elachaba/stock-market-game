@@ -15,13 +15,18 @@ import javafx.stage.Stage;
 import javafx.scene.text.Text;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-public class LoginScene extends Application implements EventHandler<ActionEvent>, Initializable {
+public class LoginScene {
 
-    Connection con;
+
+    private ConnectionDB connectionDB = new ConnectionDB();
+    private Connection con = connectionDB.getConnection();
+
+    private MainApplication mainApp;
     @FXML
     private Button registerButton;
 
@@ -45,11 +50,16 @@ public class LoginScene extends Application implements EventHandler<ActionEvent>
             if (!User.createAccount(username, password, con)) {
                 errorText.setText("Username already exists ! Choose another Username...");
                 errorText.setFill(Color.RED);
+
             } else {
-                errorText.setText("Account successfully registered!");
-                errorText.setFill(Color.GREEN);
+                switchToMarketScene();
+                mainApp.setUser(new User(username, password));
             }
         }
+    }
+
+    public void setMainApp(MainApplication mainApp) {
+        this.mainApp = mainApp;
     }
 
     @FXML
@@ -57,38 +67,25 @@ public class LoginScene extends Application implements EventHandler<ActionEvent>
         System.exit(0);
     }
 
+//    public void setMainApp(MainApplication mainApp) {
+//        this.mainApp = mainApp;
+//    }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        ConnectionDB connectionDB = new ConnectionDB();
-        con = connectionDB.getConnection();
-        Parent root = FXMLLoader.load(getClass().getResource("login-page.fxml"));
-        stage.setTitle("TradeMasters");
-        stage.setScene(new Scene(root));
-        registerButton = (Button) root.lookup("#registerButton");
-        userTextField = (TextField) root.lookup("#userTextField");
-        pwdTextField = (TextField) root.lookup("#pwdTextField");
-        errorText = (Text) root.lookup("#errorText");
-        exitButton = (Button) root.lookup("#exitButton");
-        registerButton.setOnAction(this);
-        stage.show();
-    }
-
-    @Override
-    public void handle(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == registerButton) {
-            registerAction();
-        }
-        if (actionEvent.getSource() == exitButton) {
-            exit();
+    public void switchToMarketScene() {
+        try {
+            FXMLLoader marketLoader = new FXMLLoader(getClass().getResource("market-stocks.fxml"));
+            Parent marketRoot = marketLoader.load();
+            MarketScene marketController = marketLoader.getController();
+            marketController.setMainApp(mainApp);
+            Scene marketScene = new Scene(marketRoot);
+            mainApp.getWindow().setScene(marketScene);
+            mainApp.getWindow().setTitle("TradeMasters");
+            mainApp.getWindow().show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace(System.err);
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
+
 }

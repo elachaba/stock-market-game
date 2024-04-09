@@ -14,6 +14,9 @@ public class Stock {
     private double quantityHeld = 0;
     private double buyPrice = currPrice;
 
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+    }
 
     public Stock(String codeName, double currPrice, double quantity) {
         this.codeName = codeName;
@@ -56,4 +59,6 @@ public class Stock {
         }
         return false;
     }
+
+
 }

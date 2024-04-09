@@ -17,8 +17,13 @@ public class Market {
     public Market(Connection connection) {
         marketStocks = new LinkedList<>();
         try {
+            /*Stocker la liste des actions de la base de données dans LinkedList*/
+            clearMarketStocks();
+            dropStocksTable(connection);
+            createStocksTable(connection);
+            brownianSimulation(connection, 10, 10);
             Statement stmt = connection.createStatement();
-            ResultSet rset = stmt.executeQuery("SELECT * FROM Stocks");
+            ResultSet rset = stmt.executeQuery("SELECT CompanyName, Price, CapMarket FROM (SELECT * FROM Stocks ORDER BY id DESC) WHERE ROWNUM <= 10");
             while (rset.next()) {
                 String stockName = rset.getString("CompanyName");
                 double price = rset.getDouble("Price");
@@ -32,9 +37,53 @@ public class Market {
             e.printStackTrace(System.err);
         }
     }
+    private void brownianSimulation(Connection connection, int nbStocks, int nbTimes) throws SQLException {
+        String insertPriceSQL = "INSERT INTO Stocks (CompanyName, Price, CapMarket) VALUES (?, ?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(insertPriceSQL)) {
+            double[][] prices = BrownianSimulator.simulation(nbTimes, nbStocks);
+            for (int i = 1; i <= nbTimes; i++) {
+                for (int j = 0; j < nbStocks; j++) {
+                    pstmt.setString(1, "Stock_" + (j + 1));
+                    pstmt.setDouble(2, prices[j][i-1]);
+                    pstmt.setDouble(3, prices[j][i-1] * 10); // Default market Cap at the start of the game
+                    pstmt.executeQuery();
+                }
+            }
+        }
+    }
+
+    private void dropStocksTable(Connection connection) throws SQLException {
+        String dropTableSQL = "DROP TABLE Stocks";
+        try (Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate(dropTableSQL);
+        } catch (SQLException e) {
+            // Ignore if table doesn't exist
+            if (!"42Y55".equals(e.getSQLState())) {
+                throw e;
+            }
+        }
+    }
+
+    private void createStocksTable(Connection connection) throws SQLException {
+        String createTableSQL = "CREATE TABLE Stocks ("
+                + "id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,"
+                + "CompanyName VARCHAR2(255) NOT NULL,"
+                + "Price NUMBER NOT NULL,"
+                + "CapMarket NUMBER NOT NULL"
+                + ")";
+        try (Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate(createTableSQL);
+        }
+    }
 
     public LinkedList<Stock> getMarketStocks() {
         return marketStocks;
+    }
+
+    public void clearMarketStocks() {
+        if (!marketStocks.isEmpty()) {
+            marketStocks.clear();
+        }
     }
 
     public void updateStock(Stock stock, double quantity, Connection con){
@@ -42,11 +91,7 @@ public class Market {
         /*quantity can be positive or negative double*/
         try {
             /*We update it in the linkedList*/
-            for (Stock s : marketStocks) {
-                if (s.equals(stock)) {
-                    s.updateQuantity(quantity);
-                }
-            }
+            this.getStock(stock).updateQuantity(quantity);
             /*Now we update it in the database*/
             Statement stmt = con.createStatement();
             ResultSet rSet = stmt.executeQuery("SELECT Price, CapMarket FROM Stocks WHERE CompanyName=" + "'" + stock.getCodeName() + "'");
@@ -62,4 +107,21 @@ public class Market {
         }
     }
 
+    public Stock getStock(String code){
+        for (Stock s : marketStocks) {
+            if (s.getCodeName().equals(code)) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public Stock getStock(Stock stock){
+        for (Stock s : marketStocks) {
+            if (s.getCodeName().equals(stock.getCodeName())) {
+                return s;
+            }
+        }
+        return null;
+    }
 }

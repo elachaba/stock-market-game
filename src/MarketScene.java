@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.sql.*;
@@ -41,8 +42,6 @@ public class MarketScene implements Initializable {
     @FXML
     private Text errorText;
     @FXML
-    private Button orderButton;
-    @FXML
     private TableView<Stock> tableView;
     @FXML
     private TableColumn<Stock, String> stockNameCol;
@@ -65,15 +64,19 @@ public class MarketScene implements Initializable {
             if (actionChoice.getValue().equals("Buy")) {
                 mainUser.buyAsset(desiredStock, quantity, mainMarket, con);
                 UpdateTable(stockName, -quantity);
+                errorText.setText(stockNameField.getText() + " bought successfully");
+                errorText.setFill(Color.GREEN);
             }
             else if (actionChoice.getValue().equals("Sell")) {
                 mainUser.sellAsset(desiredStock, quantity, mainMarket, con);
                 UpdateTable(stockName, quantity);
+                errorText.setText(stockNameField.getText() + " sold successfully");
+                errorText.setFill(Color.GREEN);
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace(System.err);
+            errorText.setText(e.getMessage());
+            errorText.setFill(Color.RED);
         }
     }
 

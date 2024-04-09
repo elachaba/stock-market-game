@@ -98,16 +98,11 @@ public class User {
         market.updateStock(stock, -quantity, con);
     }
 
-    public void sellAsset(Stock stock, double quantity, Market market, Connection con) throws Exception{
-        try {
-            personalPortfolio.sellAsset(stock, quantity);
-            personalPortfolio.updateValue(-quantity * stock.getCurrPrice());
-            updateBalance(quantity * stock.getCurrPrice());
-            market.updateStock(stock, quantity, con);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace(System.err);
-        }
+    public void sellAsset(Stock stock, double quantity, Market market, Connection con) throws Exception {
+        personalPortfolio.sellAsset(stock, quantity);
+        personalPortfolio.updateValue(-quantity * stock.getCurrPrice());
+        updateBalance(quantity * stock.getCurrPrice());
+        market.updateStock(stock, quantity, con);
     }
 
 }

@@ -56,27 +56,36 @@ public class MarketScene implements Initializable {
 
     public void orderAction(ActionEvent event) {
         String stockName = stockNameField.getText();
-        double quantity = Double.parseDouble(quantityField.getText());
-        User mainUser = mainApp.getUser();
-        Market mainMarket = mainApp.getMarket();
-        Stock desiredStock = mainMarket.getStock(stockName);
-        try {
-            if (actionChoice.getValue().equals("Buy")) {
-                mainUser.buyAsset(desiredStock, quantity, mainMarket, con);
-                UpdateTable(stockName, -quantity);
-                errorText.setText(stockNameField.getText() + " bought successfully");
-                errorText.setFill(Color.GREEN);
-            }
-            else if (actionChoice.getValue().equals("Sell")) {
-                mainUser.sellAsset(desiredStock, quantity, mainMarket, con);
-                UpdateTable(stockName, quantity);
-                errorText.setText(stockNameField.getText() + " sold successfully");
-                errorText.setFill(Color.GREEN);
-            }
-
-        } catch (Exception e) {
-            errorText.setText(e.getMessage());
+        System.out.println(stockName.isBlank());
+        if (stockName.isBlank() || quantityField.getText().isBlank() || actionChoice.getValue().isBlank()) {
+            errorText.setText("Fields are missing !");
             errorText.setFill(Color.RED);
+        }
+        else if (Double.parseDouble(quantityField.getText()) <= 0) {
+            errorText.setText("You must type a positive quantity !");
+            errorText.setFill(Color.RED);
+        } else {
+            double quantity = Double.parseDouble(quantityField.getText());
+            User mainUser = mainApp.getUser();
+            Market mainMarket = mainApp.getMarket();
+            Stock desiredStock = mainMarket.getStock(stockName);
+            try {
+                if (actionChoice.getValue().equals("Buy")) {
+                    mainUser.buyAsset(desiredStock, quantity, mainMarket, con);
+                    UpdateTable(stockName, -quantity);
+                    errorText.setText(stockNameField.getText() + " bought successfully");
+                    errorText.setFill(Color.GREEN);
+                } else if (actionChoice.getValue().equals("Sell")) {
+                    mainUser.sellAsset(desiredStock, quantity, mainMarket, con);
+                    UpdateTable(stockName, quantity);
+                    errorText.setText(stockNameField.getText() + " sold successfully");
+                    errorText.setFill(Color.GREEN);
+                }
+
+            } catch (Exception e) {
+                errorText.setText(e.getMessage());
+                errorText.setFill(Color.RED);
+            }
         }
     }
 

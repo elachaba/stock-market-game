@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -25,6 +26,11 @@ public class LoginScene {
 
     private ConnectionDB connectionDB = new ConnectionDB();
     private Connection con = connectionDB.getConnection();
+
+    private Timer globalTimer;
+
+    @FXML
+    private Label timerLabel;
 
     private static MainApplication mainApp;
     @FXML
@@ -87,6 +93,10 @@ public class LoginScene {
             System.out.println(e.getMessage());
             e.printStackTrace(System.err);
         }
+    }
+
+    public void setGlobalTimer(Timer globalTimer){
+        this.globalTimer=globalTimer;
     }
 
 

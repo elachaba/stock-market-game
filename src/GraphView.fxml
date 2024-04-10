@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="GraphViewController">
+    <!-- Création d'un graphique en ligne pour afficher le cours de l'action -->
+    <LineChart fx:id="lineChart" layoutX="10" layoutY="10" prefHeight="380" prefWidth="580">
+        <!-- Axes du graphique -->
+        <xAxis>
+            <NumberAxis label="Temps" />
+        </xAxis>
+        <yAxis>
+            <NumberAxis label="Cours de l'action" />
+        </yAxis>
+    </LineChart>
+</AnchorPane>

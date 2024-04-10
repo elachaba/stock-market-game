@@ -23,13 +23,14 @@ public class Market {
             createStocksTable(connection);
             brownianSimulation(connection, 10, 10);
             Statement stmt = connection.createStatement();
-            ResultSet rset = stmt.executeQuery("SELECT CompanyName, Price, CapMarket FROM (SELECT * FROM Stocks ORDER BY id DESC) WHERE ROWNUM <= 10");
+            ResultSet rset = stmt.executeQuery("SELECT id,CompanyName, Price, CapMarket FROM (SELECT * FROM Stocks ORDER BY id DESC) WHERE ROWNUM <= 10");
             while (rset.next()) {
+                int id = rset.getInt("id");
                 String stockName = rset.getString("CompanyName");
                 double price = rset.getDouble("Price");
                 double capMarket = rset.getDouble("CapMarket");
                 double quantity = capMarket / price;
-                Stock stock = new Stock(stockName, price, quantity);
+                Stock stock = new Stock(id, stockName, price, quantity);
                 marketStocks.add(stock);
             }
         } catch (SQLException e) {

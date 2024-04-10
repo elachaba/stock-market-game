@@ -18,6 +18,12 @@ public class MainApplication extends Application {
     private final  Connection con = connectionDB.getConnection();
     private Market market = new Market(con);
 
+    private final Timer globalTimer = Timer.getInstance();
+
+    public Timer getGlobalTimer(){
+        return globalTimer;
+    }
+
 
     public Stage getWindow() {
         return window;

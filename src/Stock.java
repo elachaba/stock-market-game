@@ -8,6 +8,7 @@
  */
 
 public class Stock {
+    private final int id;
     private final String codeName; /*Entreprise*/
     private double currPrice;
     private double quantity;
@@ -18,10 +19,15 @@ public class Stock {
         this.quantity = quantity;
     }
 
-    public Stock(String codeName, double currPrice, double quantity) {
+    public Stock(int id, String codeName, double currPrice, double quantity) {
+        this.id = id;
         this.codeName = codeName;
         this.currPrice = currPrice;
         this.quantity = quantity;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getCodeName() {

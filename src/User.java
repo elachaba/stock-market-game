@@ -26,7 +26,8 @@ public class User {
     }
 
     public void updateBalance(double cash) {
-        this.balance += cash;
+
+        balance = Double.parseDouble(String.format("%.2f", balance + cash));
     }
 
     public String getUserName() {

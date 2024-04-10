@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.Random;
 
 /**
@@ -19,8 +20,8 @@ public class BrownianSimulator {
 
         double[][] StockPrices = new double[nbStocks][nbTimes];
         for (int i=0; i<nbStocks; i++){
-            StockPrices[i][0] = initialStockPrices[i];
-            StockPrices[i][nbTimes-1] = initialStockPrices[i]+ normal(0,3* nbTimes);
+            StockPrices[i][0] = Double.parseDouble(String.format("%.2f", initialStockPrices[i]));
+            StockPrices[i][nbTimes-1] = Double.parseDouble(String.format("%.2f", initialStockPrices[i]+ normal(0,3* nbTimes)));
             recursiveBridge(StockPrices,0, nbTimes-1, i);
         }
         return StockPrices;
@@ -29,7 +30,7 @@ public class BrownianSimulator {
     private static double normal(double m, double v){
         Random random = new Random();
         double gaussianValue = random.nextGaussian();
-        return m+ gaussianValue*Math.sqrt(v);
+        return Double.parseDouble(String.format("%.2f", m+ gaussianValue*Math.sqrt(v)));
 
     }
 
@@ -38,7 +39,7 @@ public class BrownianSimulator {
             int mid = (finish+start)/2;
             double m = r[stockIndex][start] + (((double)mid-(double)start)/((double)finish-(double)start))*(r[stockIndex][finish]- r[stockIndex][start]);
             double v = (((double)finish - (double)mid)*((double)mid- (double)start))/((double)finish- (double) start);
-            r[stockIndex][mid] = normal(m,v);
+            r[stockIndex][mid] = Double.parseDouble(String.format("%.2f", normal(m,v)));
             recursiveBridge(r, start, mid, stockIndex);
             recursiveBridge(r, mid, finish, stockIndex);
         }

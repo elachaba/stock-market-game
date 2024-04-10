@@ -26,7 +26,7 @@ public class LoginScene {
     private ConnectionDB connectionDB = new ConnectionDB();
     private Connection con = connectionDB.getConnection();
 
-    private MainApplication mainApp;
+    private static MainApplication mainApp;
     @FXML
     private Button registerButton;
 
@@ -62,6 +62,10 @@ public class LoginScene {
         this.mainApp = mainApp;
     }
 
+    public static MainApplication getMainApp() {
+        return mainApp;
+    }
+
     @FXML
     public void exit() {
         System.exit(0);
@@ -75,8 +79,6 @@ public class LoginScene {
         try {
             FXMLLoader marketLoader = new FXMLLoader(getClass().getResource("market-stocks.fxml"));
             Parent marketRoot = marketLoader.load();
-            MarketScene marketController = marketLoader.getController();
-            marketController.setMainApp(mainApp);
             Scene marketScene = new Scene(marketRoot);
             mainApp.getWindow().setScene(marketScene);
             mainApp.getWindow().setTitle("TradeMasters");

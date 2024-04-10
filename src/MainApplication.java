@@ -13,9 +13,11 @@ public class MainApplication extends Application {
     private Stage window;
     private User investor;
     private Portfolio portfolio;
+    private Scene scene1;
     private final ConnectionDB connectionDB = new ConnectionDB();
     private final  Connection con = connectionDB.getConnection();
     private Market market = new Market(con);
+
 
     public Stage getWindow() {
         return window;
@@ -24,6 +26,7 @@ public class MainApplication extends Application {
     public User getUser() {
         return investor;
     }
+
 
     public void setWindow(Stage window) {
         this.window = window;

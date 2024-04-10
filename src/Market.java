@@ -45,7 +45,7 @@ public class Market {
                 for (int j = 0; j < nbStocks; j++) {
                     pstmt.setString(1, "Stock_" + (j + 1));
                     pstmt.setDouble(2, prices[j][i-1]);
-                    pstmt.setDouble(3, prices[j][i-1] * 10); // Default market Cap at the start of the game
+                    pstmt.setDouble(3, prices[j][i-1] * 100000); // Default market Cap at the start of the game
                     pstmt.executeQuery();
                 }
             }

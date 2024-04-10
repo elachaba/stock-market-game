@@ -59,12 +59,22 @@
             <Text fill="WHITE" layoutX="49.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Volume" wrappingWidth="101.7294921875" />
             <ChoiceBox fx:id="actionChoice" layoutX="49.0" layoutY="271.0" prefHeight="38.0" prefWidth="213.0" style="-fx-background-color: white;" />
             <Text fill="WHITE" layoutX="47.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Action" wrappingWidth="84.7294921875" />
-            <Button fx:id="orderButton" layoutX="84.0" layoutY="380.0" mnemonicParsing="false" onAction="#orderAction" prefHeight="38.0" prefWidth="133.0" style="-fx-background-color: #FFD858;" text="Order">
+            <Button fx:id="orderButton" layoutX="96.0" layoutY="379.0" mnemonicParsing="false" onAction="#orderAction" prefHeight="38.0" prefWidth="110.0" style="-fx-background-color: #FFD858;" text="Order">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
             <Text fx:id="errorText" fill="#dd0505" layoutX="14.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="287.7294921875" />
+            <Button fx:id="portfolioMenu" layoutX="151.0" layoutY="470.0" mnemonicParsing="false" onAction="#portfolioMenuAction" prefHeight="29.0" prefWidth="98.0" style="-fx-background-color: #0000FF80;" text="Portfolio" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="marketMenu" layoutX="58.0" layoutY="470.0" mnemonicParsing="false" onAction="#marketMenuAction" prefHeight="29.0" prefWidth="98.0" style="-fx-background-color: #0000FF80;" text="Market" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
          </children></AnchorPane>
   </items>
 </SplitPane>

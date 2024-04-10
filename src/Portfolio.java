@@ -19,14 +19,14 @@ public class Portfolio {
     }
 
     public LinkedList<Stock> getHeldAssets() {
-        return heldAssets;
+        return new LinkedList<>(heldAssets);
     }
     public double getValue() {
         return value;
     }
 
     public void updateValue(double newValue) {
-        value += newValue;
+        value = Double.parseDouble(String.format("%.2f", value + newValue));
     }
 
     public void buyAsset(Stock asset, double quantity) {

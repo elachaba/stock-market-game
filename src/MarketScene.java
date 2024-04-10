@@ -18,6 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.sql.*;
 
 import java.net.URL;
@@ -30,7 +32,7 @@ public class MarketScene implements Initializable {
 
     private ConnectionDB connectionDB = new ConnectionDB();
 
-    private MainApplication mainApp;
+    private static MainApplication mainApp = LoginScene.getMainApp();
 
     private Connection con = connectionDB.getConnection();
     @FXML
@@ -49,6 +51,28 @@ public class MarketScene implements Initializable {
     private TableColumn<Stock, String> priceCol;
     @FXML
     private TableColumn<Stock, String> quantityCol;
+    @FXML
+    private Button marketMenu;
+    @FXML
+    private Button portfolioMenu;
+
+
+    @FXML
+    void portfolioMenuAction(ActionEvent event) {
+        try {
+            FXMLLoader portLoader = new FXMLLoader(getClass().getResource("portfolio.fxml"));
+            Parent portRoot = portLoader.load();
+            Scene portScene = new Scene(portRoot);
+            mainApp.getWindow().setScene(portScene);
+            mainApp.getWindow().setTitle("TradeMasters");
+            mainApp.getWindow().show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace(System.err);
+        }
+    }
+    @FXML
+    void marketMenuAction(ActionEvent event) {}
 
     private final ObservableList<Stock> dataList = FXCollections.observableArrayList();
 
@@ -56,7 +80,6 @@ public class MarketScene implements Initializable {
 
     public void orderAction(ActionEvent event) {
         String stockName = stockNameField.getText();
-        System.out.println(stockName.isBlank());
         if (stockName.isBlank() || quantityField.getText().isBlank() || actionChoice.getValue().isBlank()) {
             errorText.setText("Fields are missing !");
             errorText.setFill(Color.RED);
@@ -65,19 +88,19 @@ public class MarketScene implements Initializable {
             errorText.setText("You must type a positive quantity !");
             errorText.setFill(Color.RED);
         } else {
-            double quantity = Double.parseDouble(quantityField.getText());
+            double quantity = Double.parseDouble(String.format("%.2f", Double.parseDouble(quantityField.getText())));
             User mainUser = mainApp.getUser();
             Market mainMarket = mainApp.getMarket();
             Stock desiredStock = mainMarket.getStock(stockName);
             try {
                 if (actionChoice.getValue().equals("Buy")) {
                     mainUser.buyAsset(desiredStock, quantity, mainMarket, con);
-                    UpdateTable(stockName, -quantity);
+                    updateTable(stockName, -quantity);
                     errorText.setText(stockNameField.getText() + " bought successfully");
                     errorText.setFill(Color.GREEN);
                 } else if (actionChoice.getValue().equals("Sell")) {
                     mainUser.sellAsset(desiredStock, quantity, mainMarket, con);
-                    UpdateTable(stockName, quantity);
+                    updateTable(stockName, quantity);
                     errorText.setText(stockNameField.getText() + " sold successfully");
                     errorText.setFill(Color.GREEN);
                 }
@@ -110,7 +133,7 @@ public class MarketScene implements Initializable {
             while (rset.next()) {
                 String companyName = rset.getString("CompanyName");
                 double price = rset.getDouble("Price");
-                double volume = rset.getDouble("CapMarket") / price;
+                double volume = Double.parseDouble(String.format("%.2f", rset.getDouble("CapMarket") / price));
                 dataList.add(new Stock(companyName, price, volume));
             }
 
@@ -148,7 +171,7 @@ public class MarketScene implements Initializable {
         actionChoice.setItems(buySellList);
     }
 
-    public void UpdateTable(String stockName, double quantity) {
+    public void updateTable(String stockName, double quantity) {
         for (Stock stock : dataList) {
             if (stock.getCodeName().equals(stockName)) {
                 stock.setQuantity(stock.getQuantity()+quantity);

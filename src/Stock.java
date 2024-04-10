@@ -12,7 +12,7 @@ public class Stock {
     private double currPrice;
     private double quantity;
     private double quantityHeld = 0;
-    private double buyPrice = currPrice;
+    private double buyPrice;
 
     public void setQuantity(double quantity) {
         this.quantity = quantity;
@@ -36,6 +36,10 @@ public class Stock {
         return quantityHeld;
     }
 
+    public double getBuyPrice() {
+        return buyPrice;
+    }
+
     public double getCurrPrice() {
         return currPrice;
     }
@@ -48,7 +52,7 @@ public class Stock {
         this.quantityHeld = quantityHeld;
     }
     public void updateQuantity(double newQuantity) {
-        quantity += newQuantity;
+        quantity = Double.parseDouble(String.format("%.2f", quantity + newQuantity));
     }
 
     @Override
